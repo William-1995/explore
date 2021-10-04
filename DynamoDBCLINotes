@@ -1,0 +1,38 @@
+AWS CLI in localstack:
+1. Create table:
+aws --endpoint-url=http://localhost:4566 dynamodb create-table \
+ --table-name mytable \
+ --attribute-definitions AttributeName=Id,AttributeType=N AttributeName=Name,AttributeType=S \
+ --key-schema AttributeName=Id,KeyType=HASH AttributeName=Name,KeyType=RANAGE \
+ --provisioned-throughput ReadCapacityUnits=5,WriteCapacityUnits=5 \
+ --tags Key=Owner,Value=willl \
+ --profile localstack
+
+2.Describe table:
+aws --endpoint-url=http://localhost:4566 dynamodb describe-table --table-name mytable --profile localstack
+
+3.Put item:
+aws --endpoint-url=http://localhost:4566 dynamodb put-item \
+--table-name mytable \
+--item file://item.json \
+--return-consumed-capacity TOTAL \
+--profile localstack
+
+item.json
+{
+    "Id": {"N": "1"},
+    "Name": {"S": "willl"}
+}
+
+4.Get item:
+aws --endpoint-url=http://localhost:4566 dynamodb get-item \
+--table-name mytable \
+--key file://key.json \
+--return-consumed-capacity TOTAL \
+--profile localstack
+
+key.kson	
+{
+    "Id": {"N": 1},
+    "Name": {"S": "willl"}
+}
